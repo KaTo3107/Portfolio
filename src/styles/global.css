@@ -69,7 +69,7 @@ nav {
   position: relative;
   text-decoration: none;
   color: var(--color-text);
-  transition: color 0.1s ease;
+  transition: color 0.2s ease;
 }
 
 .nav-list a.active {
@@ -79,7 +79,7 @@ nav {
 
 .nav-list a:hover {
   color: var(--color-primary);
-  animation: navLinkPulse 0.1s ease-in-out 2 alternate;
+  animation: navLinkPulse 0.2s ease-in-out 2 alternate;
 }
 
 .nav-list a::after {
