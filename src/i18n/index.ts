@@ -18,3 +18,12 @@ export function setLocale(locale: Locale) {
 export function t(key: MessageKey) {
   return messages[currentLocale][key];
 }
+
+export function updateTexts(locale: Locale) {
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const key = el.getAttribute('data-i18n');
+    if (key && key in messages[locale]) {
+      el.textContent = messages[locale][key as keyof typeof messages.de];
+    }
+  });
+}

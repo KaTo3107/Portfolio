@@ -53,6 +53,7 @@ nav {
   align-items: center;
 
   padding-block: 1rem;
+  font-size: 1.125rem;
 }
 
 .nav-list {
@@ -65,8 +66,49 @@ nav {
 }
 
 .nav-list a {
+  position: relative;
   text-decoration: none;
   color: var(--color-text);
+  transition: color 0.1s ease;
+}
+
+.nav-list a.active {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.nav-list a:hover {
+  color: var(--color-primary);
+  animation: navLinkPulse 0.1s ease-in-out 2 alternate;
+}
+
+.nav-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.nav-list a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@keyframes navLinkPulse {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
 }
 
 .brand {
@@ -95,4 +137,15 @@ nav {
 .language-btn.active {
   background: var(--color-primary);
   color: var(--color-text);
+}
+
+.theme-toggle {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: var(--color-text);
+  margin-left: 1rem;
 }

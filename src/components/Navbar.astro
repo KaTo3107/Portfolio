@@ -1,16 +1,15 @@
 ---
-import { t } from '../i18n/index.ts';
 const navItems = [
-  { href: '/', label: t('home') },
-  { href: '/about', label: t('about') },
-  { href: '/projects', label: t('projects') },
-  { href: '/contact', label: t('contact') }
+  { href: '/', label: 'Startseite' },
+  { href: '/aboutme', label: 'Über mich' },
+  { href: '/projects', label: 'Projekte' },
+  { href: '/contact', label: 'Kontakt' }
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<nav aria-label="Main Navigation" class="site-nav">
+<nav aria-label="Main Navigation">
   <a href="/" class="brand">KaTo</a>
 
   <ul class="nav-list">
@@ -31,9 +30,25 @@ const currentPath = Astro.url.pathname;
   </ul>
   
   <div class="language-toggle" aria-label="Language Switcher">
-    <button class="language-btn active" aria-pressed="true">DE</button>
-    <button class="language-btn" aria-pressed="false">EN</button>
+    <button class="language-btn active" data-locale="de" aria-pressed="true">DE</button>
+    <button class="language-btn" data-locale="en" aria-pressed="false">EN</button>
   </div>
 
   <button class="theme-toggle" aria-label="Toggle Menu" aria-expanded="false">Light</button>
 </nav>
+
+<script>
+  // Theme toggle functionality
+  const themeToggleButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+
+  if (!themeToggleButton) {
+    throw new Error('Theme toggle button not found');
+  }
+
+  themeToggleButton.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    themeToggleButton.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+  });
+</script>
