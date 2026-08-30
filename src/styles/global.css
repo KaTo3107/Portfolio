@@ -44,7 +44,8 @@ textarea {
     var(--container-width)
   );
 
-  margin-inline: auto;
+  margin: auto;
+  min-height: 100vh;
 }
 
 nav {
@@ -54,6 +55,11 @@ nav {
 
   padding-block: 1rem;
   font-size: 1.125rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding-inline: 1rem;
+  margin-top: 1rem;
 }
 
 .nav-list {
@@ -119,7 +125,7 @@ nav {
 .language-toggle {
   display: inline-flex;
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 1rem;
   overflow: hidden;
   background: var(--color-surface);
 }
@@ -141,11 +147,19 @@ nav {
 
 .theme-toggle {
   border: 1px solid var(--color-border);
-  border-radius: 999px;
+  border-radius: 0.5rem;
   background: var(--color-surface);
   padding: 0.5rem;
   cursor: pointer;
   transition: 0.2s ease;
   color: var(--color-text);
   margin-left: 1rem;
+}
+
+.content {
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  padding: 2rem 1.5rem;
+  background: var(--color-surface);
 }

@@ -1,8 +1,40 @@
 ---
-import DefaultLayout from '../layouts/DefaultLayout.astro';
-import '../styles/global.css';
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+import "../styles/index.css";
 ---
 
 <DefaultLayout>
-	<h1>Startseite</h1>
+	<section class="hero">
+		<div class="hero-copy">
+			<p class="eyebrow">SOFTWARE DEVELOPER</p>
+
+			<h1>Hi, ich bin Tobias Karmann. <br />
+				 Ich entwickle Software.</h1>
+
+			<p class="lead">
+				Kurzer Satz über deinen Schwerpunkt, deine Interessen und welche
+				Art von Problemen du gerne löst.
+			</p>
+
+			<div class="hero-actions">
+				<a href="/projects" class="btn btn-primary">Projekte ansehen</a>
+				<a
+					href="https://github.com"
+					target="_blank"
+					rel="noreferrer"
+					class="btn btn-secondary">
+					GitHub
+				</a>
+			</div>
+		</div>
+
+		<div class="hero-visual" aria-label="Zusätzlicher Content">
+			<span>
+				Optional:<br />
+				Foto / Code-Snippet /<br />
+				kleines persönliches<br />
+				Element
+			</span>
+		</div>
+	</section>
 </DefaultLayout>
