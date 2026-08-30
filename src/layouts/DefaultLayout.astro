@@ -1,0 +1,23 @@
+---
+import Navbar from '../components/Navbar.astro';
+import { t } from '../i18n';
+---
+
+<html lang="de" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{t('title')}</title>
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<Navbar />
+			</header>
+        	<slot />
+		</div>
+	</body>
+</html>
