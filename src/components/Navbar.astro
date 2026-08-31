@@ -7,10 +7,13 @@ const navItems = [
 ];
 
 const currentPath = Astro.url.pathname;
+import { Moon, Sun } from "@lucide/astro";
 ---
 
 <nav aria-label="Main Navigation">
-  <a href="/" class="brand">KaTo</a>
+  <a href="/" class="logo" aria-label="KaTo Startseite">
+    KaTo<span class="logo__dot" aria-hidden="true"></span>
+  </a>
 
   <ul class="nav-list">
     {navItems.map((item) => {
@@ -34,21 +37,47 @@ const currentPath = Astro.url.pathname;
     <button class="language-btn" data-locale="en" aria-pressed="false">EN</button>
   </div>
 
-  <button class="theme-toggle" aria-label="Toggle Menu" aria-expanded="false">Light</button>
+  <button class="theme-toggle" id="sun" aria-label="Toggle Menu" aria-expanded="false">
+    <Sun class="sun-icon" />
+  </button>
+  <button class="theme-toggle" id="moon" aria-label="Toggle Menu" aria-expanded="false" style="display: none;">
+    <Moon class="moon-icon" />
+  </button>
 </nav>
 
 <script>
   // Theme toggle functionality
-  const themeToggleButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const themeToggleButton = document.querySelectorAll<HTMLButtonElement>('.theme-toggle');
 
   if (!themeToggleButton) {
     throw new Error('Theme toggle button not found');
   }
+  themeToggleButton.forEach((button) => {
+    button.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      
+      const sunbutton = document.querySelector<HTMLButtonElement>('#sun');
+      const moonbutton = document.querySelector<HTMLButtonElement>('#moon');
+      
+      if(!sunbutton) {
+        throw new Error('sun button not found');
+      }
 
-  themeToggleButton.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    themeToggleButton.textContent = newTheme === 'dark' ? 'Light' : 'Dark';
+      if(!moonbutton) {
+        throw new Error('moon button not found');
+      }
+
+      if(newTheme === 'dark') {
+        sunbutton.style.display = 'block'
+        moonbutton.style.display = 'none'
+      }
+
+      if(newTheme === 'light') {
+        sunbutton.style.display = 'none'
+        moonbutton.style.display = 'block'
+      }
+    });
   });
 </script>

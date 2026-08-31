@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -12,7 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.9"
+    "@lucide/astro": "^1.37.0",
+    "astro": "^7.2.9",
+    "simple-icons-astro": "^16.1.0"
   },
   "allowScripts": {
     "esbuild": true
