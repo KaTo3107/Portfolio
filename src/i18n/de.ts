@@ -14,5 +14,6 @@ export const de = {
     heroCta: 'Projekte ansehen',
     notFoundTitle: 'Seite nicht gefunden',
     notFoundText: 'Diese Seite gibt es nicht oder nicht mehr. Vielleicht hilft dir einer dieser Links weiter.',
-    notFoundHome: 'Zur Startseite'
+    notFoundHome: 'Zur Startseite',
+    openToWork: 'Aktuell auf Jobsuche'
 }

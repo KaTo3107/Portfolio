@@ -1,38 +1,34 @@
 @import "./index.css";
 
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 2.5rem;
+.contact {
+  padding-block: 1rem;
 }
 
-.contact-card {
-  display: block;
-  text-decoration: none;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+.contact h1 {
+  margin-top: 0;
 }
 
-.contact-card:hover {
-  border-color: var(--color-primary);
-  transform: translateY(-1px);
+.contact .lead {
+  margin-top: 0;
 }
 
-.contact-card h2 {
-  margin: 0.75rem 0 0.5rem;
-  font-size: 1.1rem;
-}
-
-.contact-card__value {
-  display: block;
-  margin-top: 0.75rem;
-  font-weight: 600;
-  color: var(--color-primary);
+.contact__email {
+  gap: 0.6rem;
+  margin-top: 0.5rem;
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 768px) {
-  .contact-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+.contact__github {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-top: 1.5rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.contact__github:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
 }

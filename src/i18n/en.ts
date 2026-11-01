@@ -16,5 +16,6 @@ export const en: Record<keyof typeof de, string> = {
     heroCta: 'View projects',
     notFoundTitle: 'Page not found',
     notFoundText: 'This page does not exist or is no longer available. One of these links may help you find your way.',
-    notFoundHome: 'Back to home'
+    notFoundHome: 'Back to home',
+    openToWork: 'Currently looking for a job'
 }

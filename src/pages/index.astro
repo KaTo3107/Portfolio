@@ -1,6 +1,8 @@
 ---
 import { Server, Workflow } from '@lucide/astro';
 import { Github } from 'simple-icons-astro'
+import OpenToWork from "../components/OpenToWork.astro";
+import { siteConfig } from "../config";
 import DefaultLayout from "../layouts/DefaultLayout.astro";
 import { getLocale, localizePath, messages } from "../i18n";
 import { home } from "../i18n/home";
@@ -23,6 +25,8 @@ const codeSample = `var developer = new Developer
 <DefaultLayout>
 	<section class="hero">
 		<div class="hero-copy">
+			<OpenToWork />
+
 			<p class="eyebrow">{content.eyebrow}</p>
 
 			<h1>{t.heroGreeting} <br />
@@ -36,7 +40,7 @@ const codeSample = `var developer = new Developer
 			<div class="hero-actions">
 				<a href={localizePath('/projects', locale)} class="btn btn-primary">{t.heroCta}</a>
 				<a
-					href="https://github.com/KaTo3107"
+					href={siteConfig.githubUrl}
 					target="_blank"
 					rel="noreferrer"
 					class="btn btn-secondary">

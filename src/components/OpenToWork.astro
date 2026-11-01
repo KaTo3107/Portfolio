@@ -1,0 +1,13 @@
+---
+import { siteConfig } from '../config';
+import { getLocale, messages } from '../i18n';
+
+const t = messages[getLocale(Astro.currentLocale)];
+---
+
+{siteConfig.openToWork && (
+  <p class="open-to-work">
+    <span class="open-to-work__dot" aria-hidden="true"></span>
+    {t.openToWork}
+  </p>
+)}
