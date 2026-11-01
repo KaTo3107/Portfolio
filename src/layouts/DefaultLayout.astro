@@ -35,6 +35,7 @@ const currentPath = stripLocale(Astro.url.pathname);
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{messages[locale].title}</title>
+		<slot name="head" />
 	</head>
 	<body>
 		<div class="container">
