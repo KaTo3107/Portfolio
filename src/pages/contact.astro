@@ -1,9 +1,34 @@
 ---
+import { Mail } from '@lucide/astro';
+import { Github } from 'simple-icons-astro';
+import OpenToWork from '../components/OpenToWork.astro';
+import { siteConfig } from '../config';
 import DefaultLayout from '../layouts/DefaultLayout.astro';
-import '../styles/global.css';
+import { getLocale, messages } from '../i18n';
+import { contact } from '../i18n/contact';
+import '../styles/contact.css';
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+const content = contact[locale];
 ---
 
 <DefaultLayout>
-    <h1>Contact</h1>
-    
+    <section class="contact">
+        <h1>{t.contact}</h1>
+
+        <OpenToWork />
+
+        <p class="lead">{content.intro}</p>
+
+        <a href={`mailto:${siteConfig.email}`} class="btn btn-primary contact__email">
+            <Mail />
+            {siteConfig.email}
+        </a>
+
+        <a href={siteConfig.githubUrl} target="_blank" rel="noreferrer" class="contact__github">
+            <Github size={18} />
+            {content.githubText}
+        </a>
+    </section>
 </DefaultLayout>

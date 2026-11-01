@@ -1,9 +1,73 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro';
-import '../styles/global.css';
+import { getLocale, messages } from '../i18n';
+import { about, coreSkills, otherSkills } from '../i18n/about';
+import '../styles/about.css';
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+const content = about[locale];
+
+const timelines = [
+  { title: content.experienceTitle, entries: content.experience },
+  { title: content.educationTitle, entries: content.education }
+];
+
+const skillGroups = [
+  { title: content.coreSkillsTitle, skills: coreSkills },
+  { title: content.otherSkillsTitle, skills: otherSkills }
+];
 ---
 
 <DefaultLayout>
-    <h1>Über mich</h1>
-    
+    <h1>{t.about}</h1>
+
+    <p class="lead">{content.intro}</p>
+
+    <div class="about-grid">
+        <div>
+            {timelines.map((timeline) => (
+                <section class="about-section">
+                    <h2>{timeline.title}</h2>
+                    <ol class="timeline">
+                        {timeline.entries.map((entry) => (
+                            <li>
+                                <p class="timeline__period">{entry.period}</p>
+                                <h3>{entry.title}</h3>
+                                <p class="timeline__company">{entry.company}</p>
+                                {entry.details && (
+                                    <ul>
+                                        {entry.details.map((detail) => <li>{detail}</li>)}
+                                    </ul>
+                                )}
+                                {entry.techStack && (
+                                    <p class="timeline__stack">
+                                        {content.techStackLabel}: {entry.techStack.join(', ')}
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                    </ol>
+                </section>
+            ))}
+        </div>
+
+        <aside>
+            {skillGroups.map((group) => (
+                <section class="about-section">
+                    <h2>{group.title}</h2>
+                    <ul class="skill-list">
+                        {group.skills.map((skill) => <li>{skill}</li>)}
+                    </ul>
+                </section>
+            ))}
+
+            <section class="about-section">
+                <h2>{content.strengthsTitle}</h2>
+                <ul class="strength-list">
+                    {content.strengths.map((strength) => <li>{strength}</li>)}
+                </ul>
+            </section>
+        </aside>
+    </div>
 </DefaultLayout>

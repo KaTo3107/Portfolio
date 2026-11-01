@@ -7,23 +7,21 @@ export const messages = {
 } as const;
 
 export type Locale = keyof typeof messages;
-export type MessageKey = keyof (typeof messages)[Locale];
 
-let currentLocale: Locale = 'de';
+export const defaultLocale: Locale = 'de';
+export const locales = Object.keys(messages) as Locale[];
 
-export function setLocale(locale: Locale) {
-  currentLocale = locale;
+export function getLocale(currentLocale: string | undefined): Locale {
+  return currentLocale === 'en' ? 'en' : defaultLocale;
 }
 
-export function t(key: MessageKey) {
-  return messages[currentLocale][key];
+export function localizePath(path: string, locale: Locale) {
+  if (locale === defaultLocale) return path;
+  return path === '/' ? `/${locale}` : `/${locale}${path}`;
 }
 
-export function updateTexts(locale: Locale) {
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const key = el.getAttribute('data-i18n');
-    if (key && key in messages[locale]) {
-      el.textContent = messages[locale][key as keyof typeof messages.de];
-    }
-  });
+// Removes the trailing slash and locale prefix, e.g. /en/projects/ becomes /projects
+export function stripLocale(pathname: string) {
+  const path = pathname.replace(/\/$/, '');
+  return path.replace(/^\/en(?=\/|$)/, '') || '/';
 }

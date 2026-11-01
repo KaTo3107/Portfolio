@@ -1,9 +1,41 @@
 ---
+import { Github } from 'simple-icons-astro';
 import DefaultLayout from '../layouts/DefaultLayout.astro';
-import '../styles/global.css';
+import { getLocale, messages } from '../i18n';
+import { projects, projectsContent } from '../i18n/projects';
+import '../styles/projects.css';
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+const content = projectsContent[locale];
 ---
 
 <DefaultLayout>
-    <h1>Projects</h1>
-    
+    <h1>{t.projects}</h1>
+
+    <p class="lead">{content.intro}</p>
+
+    <ul class="project-grid">
+        {projects.map((project) => {
+            const text = content.items[project.id];
+            return (
+                <li class="card project-card">
+                    <p class="eyebrow">{text.status}</p>
+                    <h2>{project.name}</h2>
+                    <p>{text.description}</p>
+                    <ul class="tag-list">
+                        {project.techStack.map((tech) => <li>{tech}</li>)}
+                    </ul>
+                    <div class="project-card__links">
+                        {project.links.map((link, index) => (
+                            <a href={link} target="_blank" rel="noreferrer">
+                                <Github size={18} />
+                                {text.linkLabels[index]}
+                            </a>
+                        ))}
+                    </div>
+                </li>
+            );
+        })}
+    </ul>
 </DefaultLayout>

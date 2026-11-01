@@ -1,27 +1,46 @@
 ---
-import { ExternalLink, ArrowRight } from "@lucide/astro";
+import { Server, Workflow } from '@lucide/astro';
 import { Github } from 'simple-icons-astro'
+import OpenToWork from "../components/OpenToWork.astro";
+import { siteConfig } from "../config";
 import DefaultLayout from "../layouts/DefaultLayout.astro";
+import { getLocale, localizePath, messages } from "../i18n";
+import { home } from "../i18n/home";
 import "../styles/index.css";
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+const content = home[locale];
+
+const focusIcons = [Server, Workflow];
+
+const codeSample = `var developer = new Developer
+{
+    Name = "Tobias Karmann",
+    Stack = ["C#", ".NET", "ASP.NET"],
+    Enjoys = "${content.codeEnjoys}"
+};`;
 ---
 
 <DefaultLayout>
 	<section class="hero">
 		<div class="hero-copy">
-			<p class="eyebrow">SOFTWARE DEVELOPER</p>
+			<OpenToWork />
 
-			<h1>Hi, ich bin <br /> 
+			<p class="eyebrow">{content.eyebrow}</p>
+
+			<h1>{t.heroGreeting} <br />
 				Tobias Karmann <br />
 			</h1>
 
 			<p class="lead">
-				Ich löse gerne Probleme, bei denen ich bestehnde Abläufe verstehen, verbessern oder automatisieren kann.
+				{t.heroLead}
 			</p>
 
 			<div class="hero-actions">
-				<a href="/projects" class="btn btn-primary">Projekte ansehen</a>
+				<a href={localizePath('/projects', locale)} class="btn btn-primary">{t.heroCta}</a>
 				<a
-					href="https://github.com/KaTo3107"
+					href={siteConfig.githubUrl}
 					target="_blank"
 					rel="noreferrer"
 					class="btn btn-secondary">
@@ -30,5 +49,23 @@ import "../styles/index.css";
 				</a>
 			</div>
 		</div>
+
+		<pre class="hero-code" aria-hidden="true"><code>{codeSample}</code></pre>
+	</section>
+
+	<section class="home-section">
+		<h2>{content.focusTitle}</h2>
+		<ul class="focus-grid">
+			{content.focusAreas.map((area, index) => {
+				const Icon = focusIcons[index];
+				return (
+					<li class="card">
+						<Icon class="card__icon" />
+						<h3>{area.title}</h3>
+						<p>{area.text}</p>
+					</li>
+				);
+			})}
+		</ul>
 	</section>
 </DefaultLayout>

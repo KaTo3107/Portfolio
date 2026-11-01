@@ -1,0 +1,31 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro';
+import { getLocale, localizePath, messages } from '../i18n';
+import '../styles/not-found.css';
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+---
+
+<DefaultLayout>
+    <Fragment slot="head">
+        <meta name="robots" content="noindex" />
+        <!-- Hosts serve this page for every unknown path, so English paths are sent to the English version -->
+        <script is:inline>
+            if (/^\/en\/(?!404)/.test(location.pathname)) {
+                location.replace('/en/404');
+            }
+        </script>
+    </Fragment>
+
+    <section class="not-found">
+        <p class="not-found__code">404</p>
+        <h1>{t.notFoundTitle}</h1>
+        <p class="lead">{t.notFoundText}</p>
+
+        <div class="hero-actions">
+            <a href={localizePath('/', locale)} class="btn btn-primary">{t.notFoundHome}</a>
+            <a href={localizePath('/projects', locale)} class="btn btn-secondary">{t.heroCta}</a>
+        </div>
+    </section>
+</DefaultLayout>

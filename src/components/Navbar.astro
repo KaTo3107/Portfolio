@@ -1,27 +1,31 @@
 ---
-const navItems = [
-  { href: '/', label: 'Startseite' },
-  { href: '/aboutme', label: 'Über mich' },
-  { href: '/projects', label: 'Projekte' },
-  { href: '/contact', label: 'Kontakt' }
-];
+import { Menu, Moon, Sun, X } from "@lucide/astro";
+import { getLocale, localizePath, locales, messages, stripLocale } from '../i18n';
 
-const currentPath = Astro.url.pathname;
-import { Moon, Sun } from "@lucide/astro";
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
+const currentPath = stripLocale(Astro.url.pathname);
+
+const navItems = [
+  { path: '/', label: t.home },
+  { path: '/aboutme', label: t.about },
+  { path: '/projects', label: t.projects },
+  { path: '/contact', label: t.contact }
+];
 ---
 
-<nav aria-label="Main Navigation">
-  <a href="/" class="logo" aria-label="KaTo Startseite">
+<nav aria-label={t.navLabel}>
+  <a href={localizePath('/', locale)} class="logo" aria-label={t.logoLabel}>
     KaTo<span class="logo__dot" aria-hidden="true"></span>
   </a>
 
-  <ul class="nav-list">
+  <ul class="nav-list" id="nav-list">
     {navItems.map((item) => {
-      const isActive = currentPath === item.href;
+      const isActive = currentPath === item.path;
       return (
         <li>
           <a
-            href={item.href}
+            href={localizePath(item.path, locale)}
             aria-current={isActive ? 'page' : undefined}
             class={isActive ? 'active' : ''}
           >
@@ -31,53 +35,58 @@ import { Moon, Sun } from "@lucide/astro";
       );
     })}
   </ul>
-  
-  <div class="language-toggle" aria-label="Language Switcher">
-    <button class="language-btn active" data-locale="de" aria-pressed="true">DE</button>
-    <button class="language-btn" data-locale="en" aria-pressed="false">EN</button>
-  </div>
 
-  <button class="theme-toggle" id="sun" aria-label="Toggle Menu" aria-expanded="false">
-    <Sun class="sun-icon" />
-  </button>
-  <button class="theme-toggle" id="moon" aria-label="Toggle Menu" aria-expanded="false" style="display: none;">
-    <Moon class="moon-icon" />
-  </button>
+  <div class="nav-actions">
+    <div class="language-toggle" role="group" aria-label={t.languageLabel}>
+      {locales.map((item) => (
+        <a
+          href={localizePath(currentPath, item)}
+          hreflang={item}
+          lang={item}
+          class:list={['language-btn', { active: item === locale }]}
+          aria-current={item === locale ? 'true' : undefined}
+        >
+          {item.toUpperCase()}
+        </a>
+      ))}
+    </div>
+
+    <button class="theme-toggle" type="button" aria-label={t.themeLabel}>
+      <Sun class="sun-icon" />
+      <Moon class="moon-icon" />
+    </button>
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label={t.menuLabel}
+      aria-expanded="false"
+      aria-controls="nav-list"
+    >
+      <Menu class="menu-icon" />
+      <X class="close-icon" />
+    </button>
+  </div>
 </nav>
 
 <script>
-  // Theme toggle functionality
-  const themeToggleButton = document.querySelectorAll<HTMLButtonElement>('.theme-toggle');
+  const themeToggle = document.querySelector<HTMLButtonElement>('.theme-toggle');
+  const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const navList = document.querySelector<HTMLUListElement>('.nav-list');
 
-  if (!themeToggleButton) {
-    throw new Error('Theme toggle button not found');
-  }
-  themeToggleButton.forEach((button) => {
-    button.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      
-      const sunbutton = document.querySelector<HTMLButtonElement>('#sun');
-      const moonbutton = document.querySelector<HTMLButtonElement>('#moon');
-      
-      if(!sunbutton) {
-        throw new Error('sun button not found');
-      }
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
 
-      if(!moonbutton) {
-        throw new Error('moon button not found');
-      }
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch {
+      // Without storage access the choice only lasts for the current page
+    }
+  });
 
-      if(newTheme === 'dark') {
-        sunbutton.style.display = 'block'
-        moonbutton.style.display = 'none'
-      }
-
-      if(newTheme === 'light') {
-        sunbutton.style.display = 'none'
-        moonbutton.style.display = 'block'
-      }
-    });
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = navList?.classList.toggle('is-open') ?? false;
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
   });
 </script>
