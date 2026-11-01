@@ -1,9 +1,12 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro';
+import { getLocale, messages } from '../i18n';
 import '../styles/global.css';
+
+const t = messages[getLocale(Astro.currentLocale)];
 ---
 
 <DefaultLayout>
-    <h1>Über mich</h1>
-    
+    <h1>{t.about}</h1>
+
 </DefaultLayout>

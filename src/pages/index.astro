@@ -1,8 +1,11 @@
 ---
-import { ExternalLink, ArrowRight } from "@lucide/astro";
 import { Github } from 'simple-icons-astro'
 import DefaultLayout from "../layouts/DefaultLayout.astro";
+import { getLocale, localizePath, messages } from "../i18n";
 import "../styles/index.css";
+
+const locale = getLocale(Astro.currentLocale);
+const t = messages[locale];
 ---
 
 <DefaultLayout>
@@ -10,16 +13,16 @@ import "../styles/index.css";
 		<div class="hero-copy">
 			<p class="eyebrow">SOFTWARE DEVELOPER</p>
 
-			<h1>Hi, ich bin <br /> 
+			<h1>{t.heroGreeting} <br />
 				Tobias Karmann <br />
 			</h1>
 
 			<p class="lead">
-				Ich löse gerne Probleme, bei denen ich bestehnde Abläufe verstehen, verbessern oder automatisieren kann.
+				{t.heroLead}
 			</p>
 
 			<div class="hero-actions">
-				<a href="/projects" class="btn btn-primary">Projekte ansehen</a>
+				<a href={localizePath('/projects', locale)} class="btn btn-primary">{t.heroCta}</a>
 				<a
 					href="https://github.com/KaTo3107"
 					target="_blank"
