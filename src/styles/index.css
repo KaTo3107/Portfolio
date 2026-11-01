@@ -5,6 +5,9 @@
   grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.9fr);
   align-items: center;
   gap: 2rem;
+  
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-actions {
